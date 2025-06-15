@@ -3,6 +3,12 @@
 This project is a Spring Boot application for analyzing feedback from events.
 Also includes simple UI made with React.
 
+## Prerequisites
+
+* Java 17+
+* Maven
+* HuggingFace API token
+
 ## Setup
 
 1.  **Clone the repository:**
@@ -16,6 +22,11 @@ Also includes simple UI made with React.
     ```bash
     mvn clean install
     ```
+    
+3. **Setup environment variables:**
+*  ``H2_DB_USER`` for database username
+*  ``H2_DB_PASSWORD`` for database password
+*  ``HF_TOKEN`` for HuggingFace API token
 
 ## Running the application
 
@@ -48,8 +59,11 @@ The following endpoints are available:
 
 *   **GET /events/{eventId}/feedback**
     * Retrieves a list of all feedback for a specific event.
+    
 *   **GET /events/{eventId}/feedback/count**
+
     * Retrieves a number of feedback entries for a specific event.
+    
 *   **POST /events/{eventId}/feedback"**
     * Creates a new feedback for specific event.
 
