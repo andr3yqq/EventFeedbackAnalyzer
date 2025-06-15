@@ -20,6 +20,11 @@ public class FeedbackController {
         return ResponseEntity.ok(feedbackService.getAllFeedbackByEventId(eventId));
     }
 
+    @GetMapping("/{eventId}/feedback/count")
+    public ResponseEntity<Integer> getFeedbackCountByEventId(@PathVariable Long eventId) {
+        return ResponseEntity.ok(feedbackService.getFeedbackCountByEventId(eventId));
+    }
+
     @PostMapping("/{eventId}/feedback")
     public ResponseEntity<FeedbackDto> createFeedback(@PathVariable Long eventId, @RequestBody FeedbackDto feedback) {
         FeedbackDto createdFeedback = feedbackService.createFeedback(eventId, feedback);

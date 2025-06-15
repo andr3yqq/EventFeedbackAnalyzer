@@ -10,14 +10,12 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class WebClientConfig {
 
-    @Value("${huggingface.api.token}")
-    private String HFtoken;
-
     @Bean
-    public WebClient APIwebClient() {
+    public WebClient webClient(@Value("${huggingface.api.token}") String HFtoken) {
         return WebClient.builder()
-                .baseUrl("https://router.huggingface.co/hf-inference/models/tabularisai/multilingual-sentiment-analysis")
-                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + HFtoken, HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .baseUrl("https://api-inference.huggingface.co")
+                .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer " + HFtoken)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
     }
 }

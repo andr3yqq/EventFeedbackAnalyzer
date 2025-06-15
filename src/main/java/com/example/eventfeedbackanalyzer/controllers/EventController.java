@@ -20,6 +20,11 @@ public class EventController {
         return ResponseEntity.ok(eventService.findAll());
     }
 
+    @GetMapping("/{eventId}")
+    public ResponseEntity<EventDto> getEventById(@PathVariable Long eventId) {
+        return ResponseEntity.ok(eventService.getEventById(eventId));
+    }
+
     @PostMapping
     public ResponseEntity<EventDto> createEvent(@RequestBody EventDto eventDto) {
         return ResponseEntity.ok(eventService.createEvent(eventDto));

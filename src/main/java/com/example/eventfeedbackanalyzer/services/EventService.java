@@ -27,9 +27,14 @@ public class EventService {
         return eventMapper.toDtoList(eventRepository.findAll());
     }
 
+    public EventDto getEventById(Long eventId) {
+        return eventMapper.toDto(eventRepository.findById(eventId).orElse(null));
+    }
+
     public EventDto createEvent(EventDto eventDto) {
         Event event = eventMapper.toEntity(eventDto);
-        return eventMapper.toDto(eventRepository.save(event));
+        eventRepository.save(event);
+        return eventMapper.toDto(event);
     }
 
     public EventSummaryDto getEventSummary(Long eventId) {
@@ -48,9 +53,11 @@ public class EventService {
         eventRatings.put("Negative", 0L);
         eventRatings.put("Very Negative", 0L);
         feedbackRepository.findAllByEventId(eventId).forEach(feedback -> {
-            sentimentRepository.findById(feedback.getSentiment().getId()).ifPresent(sentiment -> {
-                eventRatings.compute(sentiment.getLabel(),(k,v) -> v == null ? 1L : v + 1);
-            });
+            if (feedback.getSentiment() != null) {
+                sentimentRepository.findById(feedback.getSentiment().getId()).ifPresent(sentiment -> {
+                    eventRatings.compute(sentiment.getLabel(),(k,v) -> v == null ? 1L : v + 1);
+                });
+            }
         });
         eventSummary.setRatings(eventRatings);
         return eventSummary;
